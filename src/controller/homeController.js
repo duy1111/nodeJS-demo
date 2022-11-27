@@ -15,18 +15,27 @@ async function getHomePage(req, res) {
     //         });
     //     });
     //     console.log(data)
-    //     
+    //
     // });
 
     const [rows, fields] = await pool.execute('SELECT * FROM `user` ');
-    
+
     return res.render('index.ejs', { dataUser: rows });
 }
 export default getHomePage;
-async function getDetailPage(req, res){
+async function getDetailPage(req, res) {
     let id = req.params.userId;
-    let [user,fields] = await pool.execute('SELECT * FROM `user` WHERE `id` = ?  ',[id])
-    return res.send(JSON.stringify(user))
+    let [user, fields] = await pool.execute('SELECT * FROM `user` WHERE `id` = ?  ', [id]);
+    return res.send(JSON.stringify(user));
 }
-
-export {getDetailPage} ;
+async function getCreateNewUser(req, res) {
+    console.log('check req', req.body.firstName);
+    await pool.execute('INSERT INTO `user` ( `firstName`, `lastName`, `email`,`address`) VALUES (?,? ,? ,? );', [
+        req.body.firstName,
+        req.body.lastName,
+        req.body.email,
+        req.body.address,
+    ]);
+    return res.redirect('/')
+}
+export { getDetailPage, getCreateNewUser };
