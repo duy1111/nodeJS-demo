@@ -43,7 +43,7 @@ let updateUser = async (req, res) => {
     })
 };
 let deleteUser = async(req,res) =>{
-    let id =req.body.id
+    let id =req.params.id
     if (!id) {
         return res.status(200).json({
             message: 'missing required params',

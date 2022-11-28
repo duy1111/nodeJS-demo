@@ -6,7 +6,7 @@ function initApiRoute(app) {
     router.get('/users', getAllUser)
     router.post('/create-user',createNewUser)
     router.put('/update-user',updateUser)
-    router.delete('/delete-user',deleteUser)
+    router.delete('/delete-user/:id',deleteUser)
     return app.use('/api/v1/', router);
 
 }
