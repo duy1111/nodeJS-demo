@@ -38,4 +38,21 @@ async function getCreateNewUser(req, res) {
     ]);
     return res.redirect('/')
 }
-export { getDetailPage, getCreateNewUser };
+async function getDeleteUser(req,res){    
+    
+    await pool.execute('delete from user where id = ? ',[req.body.userId])
+    return res.redirect('/');
+}
+async function getEditUser(req,res){
+    let id = req.params.id
+    let [user, fields] = await pool.execute('Select * from user where id = ?',[id])
+    return res.render('update.ejs',{ dataUser: user[0] })
+}
+async function getUpdateUse(req,res){
+    
+    let data = req.body
+    console.log(data)
+    await pool.execute('UPDATE `user` SET `firstName` = ? , lastName = ? , email = ? , address = ?  WHERE (`id` = ?)',[data.firstName,data.lastName,data.email,data.address,data.id]);
+    return res.redirect('/')
+}
+export { getDetailPage, getCreateNewUser, getDeleteUser , getEditUser , getUpdateUse};
