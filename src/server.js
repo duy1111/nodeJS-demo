@@ -5,7 +5,10 @@ dotenv.config();
 import express from 'express';
 import initApiRoute from './routes/api';
 //import connection from './config/connectDB'
+const multer = require('multer');
 
+
+const path = require('path');
 const app = express();
 
 const port = process.env.PORT || 8080;

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Upload File</title>
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="topnav">
+                <a href="/">Home</a>
+                <a class="active" href="/upload">Upload file</a>
+            </div>
+
+            <div class="upload-file__container">
+                <h2>Hello upload file</h2>
+                <form method="POST" action="/upload-profile-pic" enctype="multipart/form-data">
+                    <div>
+                        <label>Select your profile picture:</label>
+                        <input type="file" name="profile_pic" />
+                    </div>
+                    <div>
+                        <input type="submit" name="btn_upload_profile_pic" value="Upload" />
+                    </div>
+                </form>
+
+                <!-- MULTIPLE FILES -->
+                <!-- <h2>Hello multi upload file</h2>
+                <form action="/uploadmultiple" enctype="multipart/form-data" method="POST">
+                    Select images: <input type="file" name="myFiles" multiple />
+                    <input type="submit" value="Upload your files" />
+                </form> -->
+            </div>
+        </div>
+    </body>
+</html>

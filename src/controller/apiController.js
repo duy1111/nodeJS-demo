@@ -1,4 +1,5 @@
 import pool from '../config/connectDB';
+
 async function getAllUser(req, res) {
     let [user, fields] = await pool.execute('SELECT * FROM `user` ');
     return res.status(200).json({
