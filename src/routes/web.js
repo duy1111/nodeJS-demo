@@ -7,6 +7,7 @@ import getHomePage, {
     getUpdateUse,
     getUploadFilePage,
     uploadFilePic,
+    uploadMultipleFile,
 } from '../controller/homeController';
 let router = express.Router();
 import multer from 'multer';
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
 
     // By default, multer removes file extensions so let's add them back
     filename: function (req, file, cb) {
-        console.log(file)
+        
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
@@ -46,7 +47,7 @@ function initWebRoute(app) {
     router.post('/update-user', getUpdateUse);
     router.get('/upload', getUploadFilePage);
     router.post('/upload-profile-pic',upload.single('profile_pic'), uploadFilePic);
-
+    router.post('/upload-multiple-images',upload.array('multiple_images', 10),uploadMultipleFile)
     return app.use('/', router);
 }
 

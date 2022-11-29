@@ -50,7 +50,7 @@ async function getEditUser(req, res) {
 }
 async function getUpdateUse(req, res) {
     let data = req.body;
-    console.log(data);
+    
     await pool.execute('UPDATE `user` SET `firstName` = ? , lastName = ? , email = ? , address = ?  WHERE (`id` = ?)', [
         data.firstName,
         data.lastName,
@@ -64,7 +64,7 @@ const getUploadFilePage = async (req, res) => {
     return res.render('uploadFile.ejs');
 };
 
-const upload = multer().single('profile_pic');
+
 
 let uploadFilePic = async (req, res) => {
     //'profile_pic' is the name of our file input field in the HTML form
@@ -80,7 +80,7 @@ let uploadFilePic = async (req, res) => {
             return res.send('Please select an image to upload');
         } else if (err instanceof multer.MulterError) {
             return res.send(err);
-        } 
+        }
         // else if (err) {
         //     return res.send(err);
         // }
@@ -89,7 +89,35 @@ let uploadFilePic = async (req, res) => {
         res.send(
             `You have uploaded this image: <hr/><img src="/image/${req.file.filename}" width="500"><hr /><a href="/upload">Upload another image</a>`,
         );
-        
     });
 };
-export { getDetailPage, getCreateNewUser, getDeleteUser, getEditUser, getUpdateUse, getUploadFilePage, uploadFilePic };
+async function uploadMultipleFile(req, res) {
+        console.log(req)
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        else if (!req.files) {
+            return res.send('Please select an image to upload');
+        } 
+        let result = "You have uploaded these images: <hr />";
+        const files = req.files;
+        let index, len;
+        
+        // Loop through all the uploaded images and display them on frontend
+        for (index = 0, len = files.length; index < len; ++index) {
+            result += `<img src="/image/${files[index].filename}" width="300" style="margin-right: 20px;">`;
+        }
+        result += '<hr/><a href="/upload">Upload more images</a>';
+        res.send(result);
+    
+}
+export {
+    getDetailPage,
+    getCreateNewUser,
+    getDeleteUser,
+    getEditUser,
+    getUpdateUse,
+    getUploadFilePage,
+    uploadFilePic,
+    uploadMultipleFile,
+};
